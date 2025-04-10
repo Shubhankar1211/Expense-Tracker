@@ -1,0 +1,135 @@
+/* Core styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    padding: 25px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #2c3e50;
+    margin: 20px 0 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+#expense-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#expense-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+    position: relative;
+    padding-right: 50px;
+}
+
+#expense-list li:nth-child(odd) {
+    border-left-color: #2ecc71;
+}
+
+#expense-list li button {
+    position: absolute;
+    right: 10px;
+    background: #e74c3c;
+    padding: 5px 8px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+#expense-list li button:hover {
+    background: #c0392b;
+}
+
+#total {
+    margin-top: 15px;
+    padding: 12px;
+    background: #3498db;
+    border-radius: 6px;
+    color: white;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .container {
+        padding: 15px;
+    }
+    
+    #expense-list li {
+        padding-right: 45px;
+    }
+}
+
+/* Empty state */
+#expense-list:empty::after {
+    content: "No expenses yet. Add one to get started!";
+    display: block;
+    text-align: center;
+    color: #95a5a6;
+    padding: 15px;
+    font-style: italic;
+}
