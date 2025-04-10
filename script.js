@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded',()=>{
    const expenseList = document.getElementById('expense-list')
    const totalAmountDisplay = document.getElementById('total')
 
-   let expenses =[]
+   let expenses =JSON.parse(localStorage.getItem('expenses'))|| []  // we ser the local storage but we don't bring it back for bring it back we use the getItem
    let totalAmount = calculateTotal() // this will give you the final amount which will be done at the time of loading // 
+
+   renderExpenses()
 
    // this total amount will be given back a method that method will go into the expenses array and will get all the amountby looping thorugh it all the amount in numbers and get it back
    // how can i add things to it i will be added things by listening to the event somebuddy has to submit the form then i have to listening to this
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
         expenses.push(newExpense) // expenses it the array an the new expense is the object
         saveExpensesTolocal() // when we actually run this it saves the array freshly into the local storage
+        renderExpenses()
         updateTotal() // but somebody has to update the total that is why we are using it if it is zero it ko we will update the total if is not zero then we will have to update it 
 
         //clear out the values
@@ -32,6 +35,21 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
 
    })
+
+   function renderExpenses(){
+      // ho its gone a render the expenses // first it gona do go to the paritcular place flushout  everything clear the current list might be there vlaues loop through the values create element
+      expenseList.innerHTML = ""
+      expenses.forEach(expense => {
+        const li = document.createElement('li')
+        li.innerHTML=`
+        ${expense.name} - $${expense.amount}
+        <button data-id ="${expense.id}">Delete</button>
+        `
+        expenseList.appendChild(li);
+
+      })
+   }
+
 
    function calculateTotal(){
       return expenses.reduce((sum,expense)=> sum + expense.amount ,0) // where sum is the accumulatar // == ki jarrorat nahi h yha = whatever the value sum hold it keeps updating every single iteration
@@ -46,4 +64,17 @@ document.addEventListener('DOMContentLoaded',()=>{
      totalAmountDisplay.textContent=totalAmount.toFixed(2)
 
    }
+
+   expenseList.addEventListener('click',(e)=>{
+      if(e.target.tagName === 'BUTTON'){
+        const expenseId = parseInt(e.target.getAttribute("data-id"))
+        expenses = expenses.filter((expense)=>expense.id!== expenseId)
+
+        saveExpensesTolocal()
+        renderExpenses()
+        updateTotal()
+      }
+   })
+
+   
 })
